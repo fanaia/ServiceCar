@@ -8,7 +8,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import axios from 'axios';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 
 export default function AdicionarServicoScreen() {
   const [loading, setLoading] = useState(false);
@@ -59,11 +59,21 @@ export default function AdicionarServicoScreen() {
         onChangeText={text => setOficina(text)}
       />
       <TextInput
-        style={styles.input}
+        style={[styles.input, {height: 120, textAlignVertical: 'top'}]}
         placeholder="Descrição"
         placeholderTextColor={333}
         value={descricao}
         onChangeText={text => setDescricao(text)}
+        multiline={true}
+        numberOfLines={4}
+      />
+
+      <TextInput
+        style={styles.input}
+        placeholder="Meses de Garantia"
+        placeholderTextColor={333}
+        value={mesesGarantia}
+        onChangeText={text => setMesesGarantia(text)}
       />
       <TextInput
         style={styles.input}
@@ -71,13 +81,6 @@ export default function AdicionarServicoScreen() {
         placeholderTextColor={333}
         value={valor}
         onChangeText={text => setValor(text)}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Meses de Garantia"
-        placeholderTextColor={333}
-        value={mesesGarantia}
-        onChangeText={text => setMesesGarantia(text)}
       />
       <TextInput
         style={styles.input}
@@ -90,7 +93,7 @@ export default function AdicionarServicoScreen() {
         style={styles.button}
         onPress={handleAdicionarServico}
         disabled={loading}>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <View>
           {loading ? (
             <ActivityIndicator size="small" color="#ffffff" />
           ) : (
@@ -107,7 +110,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    justifyContent: 'center',
   },
   title: {
     fontSize: 24,
