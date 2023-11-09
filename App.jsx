@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, Button, StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 export default function App() {
   const navigation = useNavigation();
@@ -22,9 +23,17 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>ServiceCar</Text>
-      <Button title="Adicionar" onPress={handleAdd} />
-      <Button title="Procurar" onPress={handleSearch} />
-      <Button title="Listar" onPress={handleList} />
+      <View style={styles.buttonGroup}>
+        <TouchableOpacity style={styles.button} onPress={handleAdd}>
+          <Text style={styles.buttonText}>Novo Serviço</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={handleList}>
+          <Text style={styles.buttonText}>Listar Todos</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={handleSearch}>
+          <Text style={styles.buttonText}>Procurar</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -39,5 +48,21 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     color: '#000000',
+  },
+  buttonGroup: {
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    width: 300,
+  },
+  button: {
+    padding: 20,
+    alignItems: 'center',
+    borderRadius: 5,
+    marginVertical: 3,
+    backgroundColor: 'orange',
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
   },
 });

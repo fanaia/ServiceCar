@@ -91,8 +91,11 @@ export default function AdicionarServicoScreen() {
         onPress={handleAdicionarServico}
         disabled={loading}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Text style={styles.buttonText}>Adicionar Serviço</Text>
-          {loading && <ActivityIndicator size="small" color="#ffffff" />}
+          {loading ? (
+            <ActivityIndicator size="small" color="#ffffff" />
+          ) : (
+            <Text style={styles.buttonText}>Adicionar Serviço</Text>
+          )}
         </View>
       </TouchableOpacity>
       {resultado && <Text style={styles.msg}>{resultado}</Text>}
