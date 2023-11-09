@@ -1,17 +1,30 @@
 import React, {useState} from 'react';
-import {View, Text, TextInput, Button, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  StyleSheet,
+  ActivityIndicator,
+} from 'react-native';
 import axios from 'axios';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 export default function AdicionarServicoScreen() {
+  const [loading, setLoading] = useState(false);
+
   const [oficina, setOficina] = useState('');
   const [descricao, setDescricao] = useState('');
   const [valor, setValor] = useState('');
   const [mesesGarantia, setMesesGarantia] = useState('');
   const [dataServico, setDataServico] = useState('');
+
   const [resultado, setResultado] = useState('');
 
   const handleAdicionarServico = async () => {
     try {
+      setLoading(true);
+
       const servico = {
         oficina,
         descricao,
@@ -26,10 +39,12 @@ export default function AdicionarServicoScreen() {
       );
 
       // Define o resultado com a resposta da API
-      setResultado(JSON.stringify(response.data));
+      setResultado(response.data);
+      setLoading(false);
     } catch (error) {
       // Lida com erros, por exemplo, exibindo uma mensagem de erro
       setResultado('Erro ao adicionar o serviço');
+      setLoading(false);
     }
   };
 
@@ -39,35 +54,48 @@ export default function AdicionarServicoScreen() {
       <TextInput
         style={styles.input}
         placeholder="Oficina"
+        placeholderTextColor={333}
         value={oficina}
         onChangeText={text => setOficina(text)}
       />
       <TextInput
         style={styles.input}
         placeholder="Descrição"
+        placeholderTextColor={333}
         value={descricao}
         onChangeText={text => setDescricao(text)}
       />
       <TextInput
         style={styles.input}
         placeholder="Valor"
+        placeholderTextColor={333}
         value={valor}
         onChangeText={text => setValor(text)}
       />
       <TextInput
         style={styles.input}
         placeholder="Meses de Garantia"
+        placeholderTextColor={333}
         value={mesesGarantia}
         onChangeText={text => setMesesGarantia(text)}
       />
       <TextInput
         style={styles.input}
         placeholder="Data do Serviço"
+        placeholderTextColor={333}
         value={dataServico}
         onChangeText={text => setDataServico(text)}
       />
-      <Button title="Adicionar Serviço" onPress={handleAdicionarServico} />
-      {resultado && <Text>{resultado}</Text>}
+      <TouchableOpacity
+        style={styles.button}
+        onPress={handleAdicionarServico}
+        disabled={loading}>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Text style={styles.buttonText}>Adicionar Serviço</Text>
+          {loading && <ActivityIndicator size="small" color="#ffffff" />}
+        </View>
+      </TouchableOpacity>
+      {resultado && <Text style={styles.msg}>{resultado}</Text>}
     </View>
   );
 }
@@ -82,6 +110,12 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 16,
+    color: '#000',
+  },
+  msg: {
+    fontSize: 18,
+    marginBottom: 16,
+    color: '#F00',
   },
   input: {
     height: 40,
@@ -89,5 +123,16 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 16,
     paddingHorizontal: 8,
+    color: '#000',
+  },
+  button: {
+    backgroundColor: 'blue',
+    padding: 10,
+    alignItems: 'center',
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
   },
 });
