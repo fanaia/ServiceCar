@@ -12,9 +12,10 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 const ListarServicoScreen = () => {
   
   console.log("ListarServicoScreen")
+  console.log(route.params);
   const [loading, setLoading] = useState(false);
   const [servicos, setServicos] = useState();
-  const placa = route.params?.placa;
+  const placa = route.params?.placa
 
   
   const listar = async () => {
