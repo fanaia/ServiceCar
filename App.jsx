@@ -1,37 +1,67 @@
-import React from 'react';
-import {View, Text, Button, StyleSheet} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import React, { useState } from 'react';
+import { View, Text, TextInput, Button, StyleSheet, ToastAndroid, Alert, Image } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import ExitApp from 'react-native';
 
 export default function App() {
+
   const navigation = useNavigation();
+  const [placa,setPlaca] = useState();
+  
 
   const handleAdd = () => {
     navigation.navigate('AdicionarServico');
+
+  };
+
+  const handleList = () => {
+    
+    if (placa === '') {
+      Alert.alert('PHSystem Tecnologia', 'Por Favor, Informe a Placa . . .');
+      return placa;
+    } else {
+      // Lógica para lidar com o texto fornecido
+      navigation.navigate('ListarServico', {
+        
+        placa,
+      });  
+      
+    }    
   };
 
   const handleSearch = () => {
     // Lógica a ser executada quando o botão "Procurar" for pressionado.
-    console.log('Botão "Procurar" pressionado');
-  };
+    console.log('Finalizar App');
+    //ExitApp.exitApp();
 
-  const handleList = () => {
-    // Lógica a ser executada quando o botão "Listar" for pressionado.
-    console.log('Botão "Listar" pressionado');
   };
 
   return (
     <View style={styles.container}>
+
       <Text style={styles.title}>ServiceCar</Text>
+      <Text style={styles.titlePLaca}>Placa:</Text>
+      <TextInput name="placa" style={styles.input, { borderWidth: 1 }}
+      value={placa}
+      onChangeText={(text) => setPlaca(text)}
+        placeholder="Informe a Placa . . ."
+        autoFocus={true}
+        maxLength={8}
+        onSubmitEditing={() => { this.TextInput.focus(); }}
+
+      />
+
       <View style={styles.buttonGroup}>
         <TouchableOpacity style={styles.button} onPress={handleAdd}>
-          <Text style={styles.buttonText}>Novo Serviço</Text>
+          <Text style={styles.buttonText}>Cadastrar</Text>
+
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={handleList}>
-          <Text style={styles.buttonText}>Listar Todos</Text>
+          <Text style={styles.buttonText}>Listar</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={handleSearch}>
-          <Text style={styles.buttonText}>Procurar</Text>
+          <Text style={styles.buttonText}>Fechar</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -44,25 +74,49 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+
   title: {
+
+    fontSize: 48,
+    fontWeight: 'bold',
+    color: '#ff8c00',
+
+  },
+
+  input: {
+    fontSize: 44,
+    marginTop: 1,
+  },
+
+  titlePLaca: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#000000',
+    color: '#ff8c00',
+    marginTop: 1,
+    marginBottom: 5,
+    borderColor: "#f8f6",
   },
+
   buttonGroup: {
     flexDirection: 'column',
-    justifyContent: 'space-between',
-    width: 300,
+    padding: 8,
+    width: 350,
+    marginBottom: 5,
+    marginVertical: 8,
+
   },
+
   button: {
-    padding: 20,
+    padding: 30,
     alignItems: 'center',
-    borderRadius: 5,
-    marginVertical: 3,
-    backgroundColor: 'orange',
+    borderRadius: 30,
+    marginVertical: 2,
+    backgroundColor: 'blue',
+
   },
+
   buttonText: {
     color: 'white',
-    fontSize: 16,
+    fontSize: 20,
   },
 });
