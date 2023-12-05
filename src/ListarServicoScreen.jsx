@@ -1,37 +1,29 @@
-import React, { useEffect, useState } from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  ActivityIndicator,
-} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {View, Text, StyleSheet, ActivityIndicator} from 'react-native';
 import axios from 'axios';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import {useRoute} from '@react-navigation/native';
 
 const ListarServicoScreen = () => {
-  
-  console.log("ListarServicoScreen")
+  console.log('ListarServicoScreen');
+
+  const route = useRoute();
   console.log(route.params);
+
   const [loading, setLoading] = useState(false);
   const [servicos, setServicos] = useState();
-  const placa = route.params?.placa
+  const placa = route.params?.placa;
 
-  
   const listar = async () => {
-      
     setLoading(true);
     try {
-      const url = 'https://us-central1-servicecar-33601.cloudfunctions.net/api/servico/listar?placa=${placa}';
-      const parametros = {
-        placa: placa
-      };
-      
-      const response = await axios.get(url, { params: parametros })
-      
+      const url =
+        'https://us-central1-servicecar-33601.cloudfunctions.net/api/servico/listar';
+      const parametros = {placa: placa};
+
+      const response = await axios.get(url, {params: parametros});
       console.log(response.data);
-      
-      setServicos(response.data); // Assumindo que a resposta da API contém os serviços
+
+      setServicos(response.data);
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -40,11 +32,9 @@ const ListarServicoScreen = () => {
   };
 
   useEffect(() => {
-    
     listar();
-    
   }, []);
-  
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Listar Serviço</Text>
@@ -52,21 +42,22 @@ const ListarServicoScreen = () => {
         <ActivityIndicator size="small" color="#ffffff" />
       ) : (
         <View>
-          
           {servicos?.map((servico, index) => (
             <View style={styles.Card} key={index}>
               <Text style={styles.CardText}>{servico.placa}</Text>
               <Text style={styles.CardText}>{servico.oficina}</Text>
-              <Text style={styles.CardText}>{servico.descricao} {"  Valor: "}{servico.valor}</Text>
+              <Text style={styles.CardText}>
+                {servico.descricao} {'  Valor: '}
+                {servico.valor}
+              </Text>
               <Text style={styles.CardText}>{servico.dataservico}</Text>
-              
-            </View >
+            </View>
           ))}
-        </View >
+        </View>
       )}
-    </View >
+    </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -103,17 +94,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   Card: {
-    backgroundColor: "white",
+    backgroundColor: 'white',
     padding: 16,
     borderRadius: 30,
     borderWidth: 2,
-    height:100,
-    margin:2,
+    height: 100,
+    margin: 2,
   },
 
   CardText: {
     fontSize: 12,
-    padding:1,
+    padding: 1,
   },
 });
 
