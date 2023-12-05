@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -8,11 +8,11 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import axios from 'axios';
-import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function AdicionarServicoScreen() {
   const [loading, setLoading] = useState(false);
-
+  const [placa, setPlaca] = useState('');
   const [oficina, setOficina] = useState('');
   const [descricao, setDescricao] = useState('');
   const [valor, setValor] = useState('');
@@ -22,10 +22,12 @@ export default function AdicionarServicoScreen() {
   const [resultado, setResultado] = useState('');
 
   const handleAdicionarServico = async () => {
+    console.log("handleAdicionarServico")
     try {
       setLoading(true);
 
       const servico = {
+        placa,
         oficina,
         descricao,
         valor,
@@ -33,13 +35,16 @@ export default function AdicionarServicoScreen() {
         dataServico,
       };
 
+      console.log(servico);
+
       const response = await axios.post(
         'https://us-central1-servicecar-33601.cloudfunctions.net/api/servico/adicionar',
         servico,
       );
 
       // Define o resultado com a resposta da API
-      setResultado(response.data);
+      console.log(response.data)
+      setResultado("Serviço adicionado com sucesso");
       setLoading(false);
     } catch (error) {
       // Lida com erros, por exemplo, exibindo uma mensagem de erro
@@ -50,7 +55,14 @@ export default function AdicionarServicoScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Adicionar Serviço</Text>
+      <Text style={styles.title}>Informações do Serviço</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Placa"
+        placeholderTextColor={333}
+        value={placa}
+        onChangeText={text => setPlaca(text)}
+      />
       <TextInput
         style={styles.input}
         placeholder="Oficina"
@@ -59,7 +71,7 @@ export default function AdicionarServicoScreen() {
         onChangeText={text => setOficina(text)}
       />
       <TextInput
-        style={[styles.input, {height: 120, textAlignVertical: 'top'}]}
+        style={[styles.input, { height: 120, textAlignVertical: 'top' }]}
         placeholder="Descrição"
         placeholderTextColor={333}
         value={descricao}
