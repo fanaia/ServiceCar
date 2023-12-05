@@ -26,7 +26,7 @@ const ListarServicoScreen = () => {
       const parametros = {
         placa: placa
       };
-      console.log('parametros')
+      
       const response = await axios.get(url, { params: parametros })
       
       console.log(response.data);
