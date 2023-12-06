@@ -3,12 +3,11 @@ import {
   View,
   Text,
   TextInput,
-  Button,
   StyleSheet,
   ActivityIndicator,
 } from 'react-native';
 import axios from 'axios';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function AdicionarServicoScreen() {
   const [loading, setLoading] = useState(false);
@@ -22,7 +21,7 @@ export default function AdicionarServicoScreen() {
   const [resultado, setResultado] = useState('');
 
   const handleAdicionarServico = async () => {
-    console.log("handleAdicionarServico")
+    console.log('handleAdicionarServico');
     try {
       setLoading(true);
 
@@ -43,8 +42,8 @@ export default function AdicionarServicoScreen() {
       );
 
       // Define o resultado com a resposta da API
-      console.log(response.data)
-      setResultado("Serviço adicionado com sucesso");
+      console.log(response.data);
+      setResultado('Serviço adicionado com sucesso');
       setLoading(false);
     } catch (error) {
       // Lida com erros, por exemplo, exibindo uma mensagem de erro
@@ -61,22 +60,22 @@ export default function AdicionarServicoScreen() {
         placeholder="Placa"
         placeholderTextColor={333}
         value={placa}
-        onChangeText={text => setPlaca(text)}
+        onChangeText={(text) => setPlaca(text)}
       />
       <TextInput
         style={styles.input}
         placeholder="Oficina"
         placeholderTextColor={333}
         value={oficina}
-        onChangeText={text => setOficina(text)}
+        onChangeText={(text) => setOficina(text)}
       />
       <TextInput
         style={[styles.input, { height: 120, textAlignVertical: 'top' }]}
         placeholder="Descrição"
         placeholderTextColor={333}
         value={descricao}
-        onChangeText={text => setDescricao(text)}
-        multiline={true}
+        onChangeText={(text) => setDescricao(text)}
+        multiline
         numberOfLines={4}
       />
 
@@ -85,32 +84,35 @@ export default function AdicionarServicoScreen() {
         placeholder="Meses de Garantia"
         placeholderTextColor={333}
         value={mesesGarantia}
-        onChangeText={text => setMesesGarantia(text)}
+        onChangeText={(text) => setMesesGarantia(text)}
       />
       <TextInput
         style={styles.input}
         placeholder="Valor"
         placeholderTextColor={333}
         value={valor}
-        onChangeText={text => setValor(text)}
+        onChangeText={(text) => setValor(text)}
       />
       <TextInput
         style={styles.input}
         placeholder="Data do Serviço"
         placeholderTextColor={333}
         value={dataServico}
-        onChangeText={text => setDataServico(text)}
+        onChangeText={(text) => setDataServico(text)}
       />
       <TouchableOpacity
         style={styles.button}
         onPress={handleAdicionarServico}
-        disabled={loading}>
+        disabled={loading}
+      >
         <View>
-          {loading ? (
-            <ActivityIndicator size="small" color="#ffffff" />
-          ) : (
-            <Text style={styles.buttonText}>Adicionar Serviço</Text>
-          )}
+          {loading
+            ? (
+              <ActivityIndicator size="small" color="#ffffff" />
+            )
+            : (
+              <Text style={styles.buttonText}>Adicionar Serviço</Text>
+            )}
         </View>
       </TouchableOpacity>
       {resultado && <Text style={styles.msg}>{resultado}</Text>}
