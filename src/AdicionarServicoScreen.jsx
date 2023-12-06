@@ -1,11 +1,5 @@
 import React, { useState } from 'react'
-import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  ActivityIndicator
-} from 'react-native'
+import { View, Text, TextInput, StyleSheet, ActivityIndicator } from 'react-native'
 import axios from 'axios'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 

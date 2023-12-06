@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {
-  View, Text, StyleSheet, ActivityIndicator
-} from 'react-native'
+import { View, Text, StyleSheet, ActivityIndicator } from 'react-native'
 import axios from 'axios'
 import { useRoute } from '@react-navigation/native'
 
