@@ -10,7 +10,7 @@ import ListarServicoScreen from './src/ListarServicoScreen'
 
 const Stack = createStackNavigator()
 
-function Navigator () {
+const Navigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="AdicionarServico">
