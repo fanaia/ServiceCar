@@ -1,9 +1,11 @@
-import React, {useEffect, useState} from 'react';
-import {View, Text, StyleSheet, ActivityIndicator} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import {
+  View, Text, StyleSheet, ActivityIndicator,
+} from 'react-native';
 import axios from 'axios';
-import {useRoute} from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
 
-const ListarServicoScreen = () => {
+function ListarServicoScreen() {
   console.log('ListarServicoScreen');
 
   const route = useRoute();
@@ -16,11 +18,10 @@ const ListarServicoScreen = () => {
   const listar = async () => {
     setLoading(true);
     try {
-      const url =
-        'https://us-central1-servicecar-33601.cloudfunctions.net/api/servico/listar';
-      const parametros = {placa: placa};
+      const url = 'https://us-central1-servicecar-33601.cloudfunctions.net/api/servico/listar';
+      const parametros = { placa };
 
-      const response = await axios.get(url, {params: parametros});
+      const response = await axios.get(url, { params: parametros });
       console.log(response.data);
 
       setServicos(response.data);
@@ -42,12 +43,14 @@ const ListarServicoScreen = () => {
         <ActivityIndicator size="small" color="#ffffff" />
       ) : (
         <View>
-          {servicos?.map((servico, index) => (
-            <View style={styles.Card} key={index}>
+          {servicos?.map((servico) => (
+            <View style={styles.Card} key={servico.id}>
               <Text style={styles.CardText}>{servico.placa}</Text>
               <Text style={styles.CardText}>{servico.oficina}</Text>
               <Text style={styles.CardText}>
-                {servico.descricao} {'  Valor: '}
+                {servico.descricao}
+                {' '}
+                {'  Valor: '}
                 {servico.valor}
               </Text>
               <Text style={styles.CardText}>{servico.dataservico}</Text>
@@ -57,7 +60,7 @@ const ListarServicoScreen = () => {
       )}
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
